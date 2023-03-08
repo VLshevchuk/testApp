@@ -1,0 +1,62 @@
+import 'color_bloc1.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: WorkApp(),
+    ),
+  );
+}
+
+class WorkApp extends StatefulWidget {
+  @override
+  AppTest createState() => AppTest();
+}
+
+class AppTest extends State<WorkApp> {
+  ColorBloc _bloc = ColorBloc();
+  @override 
+  void dispose(){
+    _bloc.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('BloC with Stream'),
+      ),
+      body: Center(
+        child: StreamBuilder(
+          stream: _bloc.outputStateStream,
+          initialData: Colors.purple,
+          builder: (context, snapshot) => 
+           AnimatedContainer(
+            height: 100,
+            width: 100,
+            color: snapshot.data,
+            duration: Duration(milliseconds: 500),
+          ),
+        ),
+      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            backgroundColor: Colors.red,
+            onPressed: (() {
+              _bloc.inputEventSink.add(ColorEvent.event_red);
+            }),
+          ),
+          SizedBox(width: 10),
+          FloatingActionButton(
+            backgroundColor: Colors.green,
+            onPressed: (() {
+              _bloc.inputEventSink.add(ColorEvent.event_green);
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+}
