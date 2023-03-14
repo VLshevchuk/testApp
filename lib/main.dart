@@ -1,61 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'color_bloc2.dart';
+import 'package:mobile_fathers/pages/page.dart';
 
-void main() {
-  runApp(WorkApp());
+
+
+void main(){
+  runApp(const WorkApp());
 }
 
 class WorkApp extends StatelessWidget {
+   const WorkApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Bloc with flutter',
-      home: BlocProvider(
-        create: (context) => ColorBloc(),
-        child: MyHomePage(),
+      title: 'Flutter demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    ColorBloc bloc = BlocProvider.of<ColorBloc>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Bloc flutter'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: BlocBuilder<ColorBloc, Color>(
-          builder: (context, stateColor) => AnimatedContainer(
-            height: 100,
-            width: 100,
-            color: stateColor,
-            duration: Duration(milliseconds: 500),
-          ),
-        ),
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-              backgroundColor: Colors.black,
-              onPressed: () {
-                bloc.add(BlackColorEvent());
-              }),
-          SizedBox(
-            height: 10,
-          ),
-          FloatingActionButton(
-              backgroundColor: Colors.pink,
-              onPressed: () {
-                bloc.add(PinkColorEvent());
-              }),
-        ],
-      ),
+      home: HomePage(),
     );
   }
 }
